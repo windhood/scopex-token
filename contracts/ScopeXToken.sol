@@ -20,13 +20,13 @@ contract ScopeXToken is ERC20, ERC20Burnable, Pausable, AccessControl {
 
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
-    constructor(uint256 initialSupply) ERC20("ScopeX", "SCX") {
+    constructor(uint256 initialSupply_) ERC20("ScopeX", "SCX") {
 
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
 
         _grantRole(PAUSER_ROLE, msg.sender);
 
-        _mint(msg.sender, initialSupply * 10 ** decimals());
+        _mint(msg.sender, initialSupply_ * 10 ** decimals());
 
         _grantRole(MINTER_ROLE, msg.sender);
 
