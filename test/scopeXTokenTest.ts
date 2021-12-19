@@ -44,6 +44,8 @@ describe("ScopeX Token", function () {
     //console.log(initialSupply);
     //expect(initialSupply).to.equal(200000000); should be initialSupply* 10**18
     expect(ethers.utils.formatEther(initialSupply) == "2000");
+
+    expect(await scopeXToken.cap()).to.equal(ethers.utils.parseEther("20000"));
   });  
 
   it("Should let you send tokens to another address", async function() {
@@ -81,5 +83,14 @@ describe("ScopeX Token", function () {
     await scopeXToken.transferFrom(addr1.address, addr2.address, ethers.utils.parseEther("1000"));
     expect(await scopeXToken.balanceOf(addr2.address)).to.equal(ethers.utils.parseEther("1000"));
   });
+
+  it("Should not exceeds cap while minting", async function() {
+    await expect(scopeXToken.mint(addr1.address, ethers.utils.parseEther("18001")))
+       .to.be.revertedWith("ScopeXToken: cap exceeded");
+    //Verifying the balances of accounts after a reverted transaction
+    expect(await scopeXToken.balanceOf(owner.address)).to.equal(ethers.utils.parseEther("2000")) ;
+    expect(await scopeXToken.balanceOf(addr1.address)).to.equal(0) ;
+    expect(await scopeXToken.totalSupply()).to.equal(ethers.utils.parseEther("2000"));
+ });
 
 });
