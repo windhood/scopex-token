@@ -14,7 +14,7 @@ contract ScopeXToken is ERC20, ERC20Burnable, Pausable, AccessControl {
 
     uint256 private immutable _cap;
 
-    constructor(uint256 initialSupply_) ERC20("ScopeX", "SCX") {
+    constructor(uint256 initialSupply_) ERC20("ScopeX Token", "SXT") {
         require(initialSupply_ > 0, "ScopeXToken: initialSupply is 0");
 
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
